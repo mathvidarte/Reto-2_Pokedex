@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Reto2</string>
+    <string name="titulo">POKEDEX</string>
+    <string name="descrip">Nombre de usuario del entrenador pokemon</string>
+    <string name="usernameInput">Username</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="atraparPoke">Atrapar un pokemon</string>
+    <string name="atraparBtn">Atrapar</string>
+    <string name="misPokes">Mis pokemones</string>
+    <string name="buscar">Buscar</string>
+    <string name="buscarBtn">Buscar</string>
+    <string name="soltarBtn">Soltar</string>
+</resources>
