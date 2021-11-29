@@ -1,5 +1,6 @@
 package com.example.reto2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
+public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements AtraparActivity.OnUrlListener {
 
     private ArrayList <Pokemon> pokemons;
+    private String theUrl;
 
     public PokeAdapter () {
         pokemons = new ArrayList<>();
@@ -32,7 +34,6 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View row = inflater.inflate(R.layout.pokerow,parent, false);
-
         PokeView skeleton = new PokeView(row);
         return skeleton;
     }
@@ -42,6 +43,9 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
 
         Pokemon pokemon = pokemons.get(position);
         skeleton.getNameRow().setText(pokemon.getName());
+        skeleton.listener(this);
+        //Glide.with(AtraparActivity.class).load(theUrl).centerCrop().into();
+
 
         //skeleton.getImgRow().setImageBitmap(pokemon.getImg());
     }
@@ -52,4 +56,8 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
     }
 
 
+    @Override
+    public void onUrl(String url) {
+       // theUrl = url
+    }
 }

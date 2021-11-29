@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(View view) {
-        String username = usernameET.getText().toString();
-        User user = new User(UUID.randomUUID().toString(), username);
+        String name = usernameET.getText().toString();
+        User user = new User(UUID.randomUUID().toString(), name);
 
-        Query query = db.collection("users").whereEqualTo("username", username);
+        Query query = db.collection("users").whereEqualTo("name", name);
         query.get().addOnCompleteListener(
                 task-> {
 

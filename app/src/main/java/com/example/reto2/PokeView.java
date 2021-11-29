@@ -26,4 +26,8 @@ public class PokeView extends RecyclerView.ViewHolder {
     public TextView getNameRow() {
         return nameRow;
     }
+
+    public void listener(PokeAdapter pokeAdapter) {
+
+    }
 }

@@ -28,8 +28,9 @@ public class AtraparActivity extends AppCompatActivity {
 
     private String pokemonSearched;
     private String userId;
+    private String photoUrl;
 
-    private OnUrlListener listener = null;
+    private OnUrlListener listener;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -60,14 +61,15 @@ public class AtraparActivity extends AppCompatActivity {
         this.listener = listener;
     }
 
+    //INTERFAZ
     public interface OnUrlListener {
         void onUrl(String url);
     }
 
     private void catchPokemon(View view) {
         pokemonSearched = atraparET.getText().toString();
-        Log.e("escribi", pokemonSearched);
 
+        //listener.onUrl(photoUrl);
         searchPokemon(pokemonSearched);
     }
 
@@ -86,7 +88,7 @@ public class AtraparActivity extends AppCompatActivity {
                     String defense = Integer.toString(response.getStats()[2].getBase_stat());
                     String speed = Integer.toString(response.getStats()[5].getBase_stat());
                     String hp = Integer.toString(response.getStats()[0].getBase_stat());
-                    String photoUrl = response.getSprites().getFront_default();
+                    photoUrl = response.getSprites().getFront_default();
 
 
                     //Crear el obj Pokemon con los datos
