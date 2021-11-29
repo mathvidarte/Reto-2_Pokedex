@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,20 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, AtraparActivity.class);
                         intent.putExtra("uuid", user.getId());
                         startActivity(intent);
+
+                        //Si el usuario existe,descargar usuario e iniciar con él
+                    } else {
+
+                        User existingUser = null;
+                        for(DocumentSnapshot doc : task.getResult()) {
+                            existingUser = doc.toObject(User.class);
+                            break;
+                        }
+                        if (existingUser.getName().equals(name)){
+                            Intent intent = new Intent(this, AtraparActivity.class);
+                            intent.putExtra("uuid", existingUser.getId());
+                            startActivity(intent);
+                        }
                     }
 
 

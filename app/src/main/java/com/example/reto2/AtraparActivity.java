@@ -30,7 +30,10 @@ public class AtraparActivity extends AppCompatActivity {
     private String userId;
     private String photoUrl;
 
-    private OnUrlListener listener;
+    //PATRÓN OBSERVER
+    private OnURLListener listener;
+
+
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,24 +56,25 @@ public class AtraparActivity extends AppCompatActivity {
 
         atraparBtn.setOnClickListener(this::catchPokemon);
 
-
-
-    }
-
-    public void setListener(OnUrlListener listener) {
-        this.listener = listener;
-    }
-
-    //INTERFAZ
-    public interface OnUrlListener {
-        void onUrl(String url);
+        FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").get().addOnCompleteListener(
+                task -> {
+                    for(DocumentSnapshot doc : task.getResult()){
+                        Pokemon pokemon = doc.toObject(Pokemon.class);
+                        adapter.addTheCatchPokemon(pokemon);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
     }
 
     private void catchPokemon(View view) {
         pokemonSearched = atraparET.getText().toString();
-
-        //listener.onUrl(photoUrl);
         searchPokemon(pokemonSearched);
+
+
+
+
+
     }
 
     public void searchPokemon (String name) {
@@ -89,7 +93,15 @@ public class AtraparActivity extends AppCompatActivity {
                     String speed = Integer.toString(response.getStats()[5].getBase_stat());
                     String hp = Integer.toString(response.getStats()[0].getBase_stat());
                     photoUrl = response.getSprites().getFront_default();
+                    Log.e("nombre", response.getForms()[0].getName());
+                    Log.e("attack", attack);
+                    Log.e("attack", defense);
+                    Log.e("attack", speed);
+                    Log.e("attack", hp);
+                    Log.e("carga", photoUrl);
 
+                    //LANZO EL URL DE LA FOTO
+                    //listener.onURL(photoUrl);
 
                     //Crear el obj Pokemon con los datos
                     Pokemon pokemon = new Pokemon(
@@ -117,6 +129,7 @@ public class AtraparActivity extends AppCompatActivity {
                 }
         ).start();
 
+
     }
 
     //Leer lo que tengo en la db
@@ -134,5 +147,15 @@ public class AtraparActivity extends AppCompatActivity {
     }
     public void addPokemon (Pokemon pokemon) {
         FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(pokemon.getId()).set(pokemon);
+    }
+
+    //PATRON OBSERVER
+    public interface OnURLListener {
+        void onURL(String url);
+    }
+
+    //SUSCRIPCIÓN
+    public void setListener(OnURLListener listener) {
+        this.listener = listener;
     }
 }

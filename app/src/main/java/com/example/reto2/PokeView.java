@@ -30,4 +30,8 @@ public class PokeView extends RecyclerView.ViewHolder {
     public void listener(PokeAdapter pokeAdapter) {
 
     }
+
+    public void setListener(PokeAdapter pokeAdapter) {
+
+    }
 }
