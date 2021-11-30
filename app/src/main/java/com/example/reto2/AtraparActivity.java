@@ -146,7 +146,7 @@ public class AtraparActivity extends AppCompatActivity {
         );
     }
     public void addPokemon (Pokemon pokemon) {
-        FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(pokemon.getId()).set(pokemon);
+        FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(UUID.randomUUID().toString()).set(pokemon);
     }
 
     //PATRON OBSERVER
