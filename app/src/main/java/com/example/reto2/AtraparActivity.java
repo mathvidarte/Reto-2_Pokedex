@@ -30,8 +30,7 @@ public class AtraparActivity extends AppCompatActivity {
     private String userId;
     private String photoUrl;
 
-    //PATRÓN OBSERVER
-    private OnURLListener listener;
+    //String namePoke = searchET.getText().toString();
 
 
 
@@ -49,7 +48,7 @@ public class AtraparActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(this);
         pokeRecycler.setLayoutManager(manager);
         pokeRecycler.setHasFixedSize(true);
-        adapter = new PokeAdapter();
+        adapter = new PokeAdapter(this);
         pokeRecycler.setAdapter(adapter);
 
         userId = getIntent().getExtras().getString("uuid");
@@ -70,11 +69,6 @@ public class AtraparActivity extends AppCompatActivity {
     private void catchPokemon(View view) {
         pokemonSearched = atraparET.getText().toString();
         searchPokemon(pokemonSearched);
-
-
-
-
-
     }
 
     public void searchPokemon (String name) {
@@ -149,13 +143,10 @@ public class AtraparActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(UUID.randomUUID().toString()).set(pokemon);
     }
 
-    //PATRON OBSERVER
-    public interface OnURLListener {
-        void onURL(String url);
+    public void buscador () {
+
     }
 
-    //SUSCRIPCIÓN
-    public void setListener(OnURLListener listener) {
-        this.listener = listener;
-    }
+
+
 }

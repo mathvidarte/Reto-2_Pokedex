@@ -1,5 +1,6 @@
 package com.example.reto2;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.google.api.Context;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements AtraparActivity.OnURLListener {
+public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
 
     //private Context context;
 
@@ -22,9 +23,9 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements Atrap
     private String theUrl;
     private AtraparActivity atrapar;
 
-    public PokeAdapter () {
-        //this.context = context;
+    public PokeAdapter (AtraparActivity context) {
         pokemons = new ArrayList<>();
+        this.atrapar=context;
 
 
     }
@@ -40,7 +41,6 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements Atrap
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View row = inflater.inflate(R.layout.pokerow,parent, false);
         PokeView skeleton = new PokeView(row);
-        skeleton.setListener(this);
         return skeleton;
     }
 
@@ -49,8 +49,17 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements Atrap
 
         Pokemon pokemon = pokemons.get(position);
         skeleton.getNameRow().setText(pokemon.getName());
+
+        skeleton.setPokemon(pokemon);
         //skeleton.listener(this);
-        //Glide.with(atrapar).load(theUrl).centerCrop().into(skeleton.getImgRow());
+        Glide.with(atrapar).load(pokemon.getImg()).centerCrop().into(skeleton.getImgRow());
+        skeleton.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(atrapar, DetalleActivity.class);
+                atrapar.startActivity(intent);
+            }
+        });
 
 
         //skeleton.getImgRow().setImageBitmap(pokemon.getImg());
@@ -61,9 +70,4 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> implements Atrap
         return pokemons.size();
     }
 
-    //RECIBO DEL PATRÓN OBSERVER
-    @Override
-    public void onURL(String url) {
-        Log.e("recibo", url);
-    }
 }
