@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/atraparBtn" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/searchET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -52,19 +52,19 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#5A5A5A"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/searchBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buscarBtn"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName3"
+        app:layout_constraintBottom_toBottomOf="@+id/searchET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName3"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintStart_toEndOf="@+id/searchET"
+        app:layout_constraintTop_toTopOf="@+id/searchET" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokeRecycler"
@@ -77,5 +77,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/searchET" />
 </androidx.constraintlayout.widget.ConstraintLayout>

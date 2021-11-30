@@ -9,18 +9,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.reto2.pokedex.Response;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.gson.Gson;
 
 import java.util.UUID;
 
 public class AtraparActivity extends AppCompatActivity {
 
-    private EditText atraparET;
-    private Button atraparBtn;
+    private EditText atraparET, searchET;
+    private Button atraparBtn, searchBtn;
     private RecyclerView pokeRecycler;
 
     private LinearLayoutManager manager;
@@ -30,6 +33,8 @@ public class AtraparActivity extends AppCompatActivity {
     private String userId;
     private String selfId;
     private String photoUrl;
+
+    private Pokemon pokemon;
 
     //String namePoke = searchET.getText().toString();
 
@@ -46,6 +51,8 @@ public class AtraparActivity extends AppCompatActivity {
         atraparET = findViewById(R.id.atraparET);
         atraparBtn = findViewById(R.id.atraparBtn);
         pokeRecycler = findViewById(R.id.pokeRecycler);
+        searchET = findViewById(R.id.searchET);
+        searchBtn = findViewById(R.id.searchBtn);
 
         manager = new LinearLayoutManager(this);
         pokeRecycler.setLayoutManager(manager);
@@ -56,6 +63,7 @@ public class AtraparActivity extends AppCompatActivity {
         userId = getIntent().getExtras().getString("uuid");
 
         atraparBtn.setOnClickListener(this::catchPokemon);
+        searchBtn.setOnClickListener(this::buscador);
 
         FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").get().addOnCompleteListener(
                 task -> {
@@ -146,8 +154,34 @@ public class AtraparActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(selfId).set(pokemon);
     }
 
-    public void buscador () {
+    //LO INTENTAMOS :(
+    public void buscador (View view) {
 
+        String nombreBuscado = searchET.getText().toString();
+
+        Query query = db.collection("Pokedex").document(userId).collection("Pokemon").whereEqualTo("name", nombreBuscado);
+        query.get().addOnCompleteListener(
+                task -> {
+                    //Si el pokemon no existe
+                    if (task.getResult().size() == 0) {
+                        Toast.makeText(this, "No Existe", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Pokemon existingPokemon = null;
+                        for(DocumentSnapshot doc : task.getResult()) {
+                            existingPokemon = doc.toObject(Pokemon.class);
+                            break;
+                        }
+                        if (existingPokemon.getName().equals(nombreBuscado)){
+                            for(DocumentSnapshot doc : task.getResult()){
+                                Pokemon pokemon = doc.toObject(Pokemon.class);
+                                adapter.searchPokemon(pokemon);
+                                adapter.addTheCatchPokemon(pokemon);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                }
+        );
     }
 
 

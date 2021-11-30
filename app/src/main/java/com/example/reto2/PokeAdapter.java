@@ -36,6 +36,11 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
         notifyItemInserted(pokemons.size()-1);
     }
 
+    public void searchPokemon (Pokemon pokemon) {
+        pokemons.clear();
+
+    }
+
     @NonNull
     @Override
     public PokeView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
