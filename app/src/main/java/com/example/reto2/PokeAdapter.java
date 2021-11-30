@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.api.Context;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -57,7 +58,12 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeView> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(atrapar, DetalleActivity.class);
+                Gson gson = new Gson();
+                String pokemontext = gson.toJson(pokemon);
+                intent.putExtra("pokemonText", pokemontext);
                 atrapar.startActivity(intent);
+                atrapar.finish();
+
             }
         });
 

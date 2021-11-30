@@ -2,6 +2,7 @@ package com.example.reto2;
 
 public class Pokemon {
     private String id;
+    private String selfId;
     private String name;
     private String defensa;
     private String ataque;
@@ -12,8 +13,9 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(String id, String name, String defensa, String ataque, String velocidad, String vida, String img) {
+    public Pokemon(String id, String selfId, String name, String defensa, String ataque, String velocidad, String vida, String img) {
         this.id = id;
+        this.selfId = selfId;
         this.name = name;
         this.defensa = defensa;
         this.ataque = ataque;
@@ -76,5 +78,13 @@ public class Pokemon {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getSelfId() {
+        return selfId;
+    }
+
+    public void setSelfId(String selfId) {
+        this.selfId = selfId;
     }
 }

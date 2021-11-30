@@ -28,6 +28,7 @@ public class AtraparActivity extends AppCompatActivity {
 
     private String pokemonSearched;
     private String userId;
+    private String selfId;
     private String photoUrl;
 
     //String namePoke = searchET.getText().toString();
@@ -40,6 +41,7 @@ public class AtraparActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrapar);
+
 
         atraparET = findViewById(R.id.atraparET);
         atraparBtn = findViewById(R.id.atraparBtn);
@@ -94,12 +96,12 @@ public class AtraparActivity extends AppCompatActivity {
                     Log.e("attack", hp);
                     Log.e("carga", photoUrl);
 
-                    //LANZO EL URL DE LA FOTO
-                    //listener.onURL(photoUrl);
+                    selfId = UUID.randomUUID().toString();
 
                     //Crear el obj Pokemon con los datos
                     Pokemon pokemon = new Pokemon(
                             userId,
+                            selfId,
                             response.getForms()[0].getName(),
                             attack,
                             defense,
@@ -113,6 +115,7 @@ public class AtraparActivity extends AppCompatActivity {
                     //subir a la firebase
                     addPokemon(new Pokemon(
                             userId,
+                            selfId,
                             response.getForms()[0].getName(),
                             attack,
                             defense,
@@ -140,7 +143,7 @@ public class AtraparActivity extends AppCompatActivity {
         );
     }
     public void addPokemon (Pokemon pokemon) {
-        FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(UUID.randomUUID().toString()).set(pokemon);
+        FirebaseFirestore.getInstance().collection("Pokedex").document(userId).collection("Pokemon").document(selfId).set(pokemon);
     }
 
     public void buscador () {
